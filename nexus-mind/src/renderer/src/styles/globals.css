@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Typography
+ * ----------
+ * --font-ui is switched by [data-font]. Every stack keeps Tajawal as a
+ * fallback so Arabic glyphs always render in Tajawal, even when the user
+ * chooses Inter for Latin text. Cal Sans has no Arabic glyphs, so display
+ * headings fall back to Tajawal per-glyph automatically.
+ */
+:root {
+  --font-ui: 'Inter Variable', 'Tajawal', system-ui, sans-serif;
+  --font-display: 'Cal Sans', 'Tajawal', var(--font-ui);
+  --font-scale: 1;
+  --density: 1;
+  color-scheme: dark;
+}
+:root[data-scheme='light'] {
+  color-scheme: light;
+}
+:root[data-font='tajawal'] {
+  --font-ui: 'Tajawal', 'Inter Variable', system-ui, sans-serif;
+}
+:root[data-font='inter'] {
+  --font-ui: 'Inter Variable', 'Tajawal', system-ui, sans-serif;
+}
+:root[data-font='system'] {
+  --font-ui: system-ui, -apple-system, 'Segoe UI', 'Tajawal', sans-serif;
+}
+:root[data-density='compact'] {
+  --density: 0.94;
+}
+:root[data-density='spacious'] {
+  --density: 1.06;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale) * var(--density));
+}
+
+body {
+  @apply bg-bg font-sans text-fg antialiased;
+  margin: 0;
+  overflow: hidden;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * Arabic typography rules
+ * -----------------------
+ * 1. Letter-spacing breaks cursive joining in Arabic script — force it off.
+ * 2. Arabic needs taller line boxes for diacritics (harakat).
+ * 3. Tajawal's heavier weights read better than Cal Sans-style tight headings.
+ */
+html:lang(ar) * {
+  letter-spacing: 0 !important;
+}
+html:lang(ar) body {
+  line-height: 1.7;
+}
+html:lang(ar) .font-display {
+  font-weight: 800;
+}
+
+/* Keep numbers, code and keyboard hints left-to-right inside RTL text. */
+code,
+kbd,
+.ltr-isolate {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+::selection {
+  background: rgb(var(--c-accent) / 0.35);
+}
+
+/* Window drag regions for the frameless title bar. */
+.drag {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Thin, theme-aware scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--c-border)) transparent;
+}
+
+@layer components {
+  .glass {
+    @apply border border-border/60 bg-surface/60 shadow-glass backdrop-blur-xl;
+  }
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent via-plasma to-amber bg-clip-text text-transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+:root[data-reduce-motion='true'] *,
+:root[data-reduce-motion='true'] *::before,
+:root[data-reduce-motion='true'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
