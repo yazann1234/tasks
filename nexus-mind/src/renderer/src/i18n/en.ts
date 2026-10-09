@@ -1,0 +1,166 @@
+/**
+ * English strings — the reference catalogue. Every other locale must provide
+ * every key in this file (enforced by the `Messages` type and a unit test).
+ */
+export const en = {
+  common: {
+    appName: 'NEXUS Mind',
+    loading: 'Loading…',
+    retry: 'Try again',
+    save: 'Save',
+    remove: 'Remove',
+    on: 'On',
+    off: 'Off',
+  },
+  nav: {
+    workspace: 'Workspace',
+    home: 'Home',
+    settings: 'Settings',
+    collapse: 'Collapse sidebar',
+    expand: 'Expand sidebar',
+    switchLanguage: 'Switch language',
+  },
+  titlebar: {
+    search: 'Search or run a command…',
+  },
+  palette: {
+    label: 'Command palette',
+    placeholder: 'Type a command or search…',
+    empty: 'No results. Try different words.',
+    navigation: 'Go to',
+    preferences: 'Preferences',
+    goHome: 'Home',
+    goSettings: 'Settings',
+    switchLanguage: 'التبديل إلى العربية',
+    toggleDirection: 'Flip layout direction',
+    nextTheme: 'Next theme',
+    toggleSidebar: 'Toggle sidebar',
+    toggleReduceMotion: 'Toggle reduced motion',
+  },
+  home: {
+    greeting: {
+      morning: 'Good morning',
+      afternoon: 'Good afternoon',
+      evening: 'Good evening',
+      night: 'Working late',
+    },
+    dueToday_one: 'You have {{count, num}} task due today.',
+    dueToday_other: 'You have {{count, num}} tasks due today.',
+    dueToday_zero: 'Nothing due today — a clean slate.',
+    stats: {
+      openTasks: 'Open tasks',
+      dueToday: 'Due today',
+      overdue: 'Overdue',
+      completedThisWeek: 'Done this week',
+      focusThisWeek: 'Focus this week',
+      notes: 'Notes',
+      habits: 'Habits',
+      projects: 'Projects',
+    },
+    keyboardTitle: 'Keyboard first',
+    keyboardBody: 'Everything is a keystroke away. Shortcuts work on any keyboard layout, including Arabic.',
+    shortcuts: {
+      palette: 'Command palette',
+      settings: 'Settings',
+      sidebar: 'Toggle sidebar',
+      summon: 'Summon from anywhere',
+    },
+    loadError: 'Could not load your workspace.',
+  },
+  settings: {
+    title: 'Settings',
+    subtitle: 'Make NEXUS Mind yours.',
+    sections: {
+      appearance: 'Appearance',
+      language: 'Language & region',
+      ai: 'AI & privacy',
+      about: 'About',
+    },
+    theme: {
+      title: 'Theme',
+      obsidian: 'Obsidian',
+      nebula: 'Nebula',
+      midnight: 'Midnight',
+      ember: 'Ember',
+      'aurora-light': 'Aurora Light',
+      paper: 'Paper',
+    },
+    font: {
+      title: 'Interface font',
+      auto: 'Automatic',
+      autoHint: 'Tajawal for Arabic, Inter for English',
+      tajawal: 'Tajawal',
+      inter: 'Inter',
+      system: 'System',
+      sample: 'أبجد هوز حطي — The quick brown fox',
+    },
+    density: {
+      title: 'Density',
+      compact: 'Compact',
+      comfortable: 'Comfortable',
+      spacious: 'Spacious',
+    },
+    fontScale: 'Text size',
+    reduceMotion: 'Reduce motion',
+    reduceMotionHint: 'Replace animations with instant transitions.',
+    sounds: 'Interface sounds',
+    soundsHint: 'Subtle audio cues for completions and streaks.',
+    language: {
+      title: 'Language',
+      direction: 'Layout direction',
+      directionHint: 'Automatic follows the language.',
+      auto: 'Automatic',
+      ltr: 'Left to right',
+      rtl: 'Right to left',
+      numerals: 'Digits',
+      numeralsAuto: 'Automatic',
+      latn: 'Western (123)',
+      arab: 'Arabic-Indic (١٢٣)',
+      calendar: 'Calendar',
+      gregory: 'Gregorian',
+      'islamic-umalqura': 'Hijri (Umm al-Qura)',
+      weekStart: 'Week starts on',
+      saturday: 'Saturday',
+      sunday: 'Sunday',
+      monday: 'Monday',
+      preview: 'Preview',
+    },
+    ai: {
+      title: 'AI provider keys',
+      description:
+        'Keys are encrypted with your operating system keychain and never leave this device except to call the provider you choose. Local Ollama models need no key.',
+      openai: 'OpenAI',
+      anthropic: 'Anthropic',
+      placeholder: 'Paste your API key',
+      connected: 'Connected',
+      notConnected: 'Not connected',
+      saved: 'Key saved securely.',
+      removed: 'Key removed.',
+      keychainUnavailable: 'Your OS keychain is unavailable, so keys cannot be stored safely on this system.',
+    },
+    about: {
+      version: 'Version',
+      platform: 'Platform',
+      osLocale: 'System language',
+      privacy: 'Your data lives in a local SQLite database. Nothing is sent anywhere unless you enable sync or AI.',
+    },
+    updated: 'Preference saved.',
+  },
+  errors: {
+    VALIDATION: 'That value is not valid.',
+    NOT_FOUND: 'Not found.',
+    SECURE_STORAGE_UNAVAILABLE: 'Secure storage is unavailable on this system.',
+    INTERNAL: 'Something went wrong. Please try again.',
+    BRIDGE_MISSING: 'NEXUS Mind must run inside its desktop app.',
+    boundaryTitle: 'This view hit a snag',
+    boundaryBody: 'The rest of the app is fine. You can retry this view.',
+  },
+};
+
+/**
+ * Shape every translation must satisfy: all English keys present, extra keys
+ * (e.g. Arabic `_two`, `_few`, `_many` plural forms) allowed.
+ */
+export type Messages<T = typeof en> = {
+  [K in keyof T]: T[K] extends string ? string : Messages<T[K]>;
+} & { [extra: string]: unknown };

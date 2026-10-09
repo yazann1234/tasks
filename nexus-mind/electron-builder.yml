@@ -1,0 +1,49 @@
+# electron-builder — packaging for Windows, macOS and Linux.
+# Only `better-sqlite3` ships as a runtime dependency; everything else is
+# bundled by electron-vite into `out/`, which keeps installers small.
+appId: app.nexusmind.desktop
+productName: NEXUS Mind
+copyright: Copyright © 2026 NEXUS Mind
+directories:
+  buildResources: build
+  output: release/${version}
+files:
+  - out/**
+  - package.json
+  - '!**/*.map'
+asarUnpack:
+  - '**/*.node'
+npmRebuild: true
+
+mac:
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSMicrophoneUsageDescription: NEXUS Mind uses the microphone only when you dictate a task or note.
+dmg:
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  artifactName: ${productName}-Setup-${version}-${arch}.${ext}
+  shortcutName: ${productName}
+
+linux:
+  category: Office
+  synopsis: AI-powered personal productivity OS
+  target: [AppImage, deb]
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+publish: null
